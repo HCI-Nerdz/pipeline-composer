@@ -148,10 +148,37 @@ function walkSteps(
  * Replay a sample request through the pipeline.
  * Redirect matches restart evaluation (edge-like), which surfaces apex/www loops.
  */
+function invalidSampleResult(detail: string, finalUrl = ""): EvaluationResult {
+  return {
+    events: [
+      {
+        stepId: "sample",
+        title: "Sample URL",
+        status: "error",
+        detail,
+      },
+    ],
+    finalUrl,
+    loopDetected: false,
+    hopLimit: HOP_LIMIT,
+  };
+}
+
 export function evaluatePipeline(pipeline: Pipeline, sample: RequestSample): EvaluationResult {
+  const trimmed = sample.url.trim();
+  if (!trimmed) {
+    return invalidSampleResult("Enter a URL to replay through the map.");
+  }
+
+  try {
+    new URL(trimmed);
+  } catch {
+    return invalidSampleResult(`Invalid URL — use a full address like https://example.com/path`, trimmed);
+  }
+
   const events: TraceEvent[] = [];
   const seen = new Set<string>();
-  let url = sample.url;
+  let url = trimmed;
   let loopDetected = false;
   let guard = 0;
 

@@ -1,0 +1,8 @@
+= 2026-08-02 — Sample URL auto-replay
+
+The sample URL field now drives path replay visibly:
+
+* Field moved above the pipeline map inside the compose activity section
+* Typing or changing the URL re-runs path replay (debounced on input, immediate on change)
+* Empty or invalid URLs show a clear error in the trace instead of failing silently
+* Replay path button kept as an explicit re-run after map edits

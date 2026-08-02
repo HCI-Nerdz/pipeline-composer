@@ -93,13 +93,18 @@ function renderPipeline(state: AppState): string {
 function renderTrace(state: AppState): string {
   const ev = state.evaluation;
   if (!ev) {
-    return `<p class="banner">Press <strong>Replay path</strong> above to walk the sample URL through this map.</p>`;
+    return `<p class="banner">Enter a sample URL above the map to walk it through this pipeline.</p>`;
   }
 
+  const sampleError = ev.events.find((e) => e.status === "error");
   const banner =
-    ev.loopDetected ?
+    sampleError ?
+      `<p class="banner danger">${esc(sampleError.detail)}</p>`
+    : ev.loopDetected ?
       `<p class="banner danger">Loop detected — two redirect steps disagree on canonical host. Align them or remove one.</p>`
-    : `<p class="banner ok">Settled at <code>${esc(ev.finalUrl)}</code></p>`;
+    : ev.finalUrl ?
+      `<p class="banner ok">Settled at <code>${esc(ev.finalUrl)}</code></p>`
+    : "";
 
   const items = ev.events
     .map(
@@ -193,16 +198,16 @@ export function renderApp(state: AppState): string {
         <p class="activity-desc">${esc(state.pipeline.description)}</p>
       </div>
 
-      <div class="map-shell">
-        ${renderPipeline(state)}
-      </div>
-
       <div class="activity-probe">
         <label>
           Sample URL
-          <span class="field-hint">The request you are thinking about while composing</span>
-          <input type="url" data-sample value="${esc(state.sampleUrl)}" />
+          <span class="field-hint">Replay updates as you type — the request you are thinking about while composing</span>
+          <input type="url" data-sample value="${esc(state.sampleUrl)}" placeholder="https://example.com/path" />
         </label>
+      </div>
+
+      <div class="map-shell">
+        ${renderPipeline(state)}
       </div>
     </section>
 
@@ -211,9 +216,9 @@ export function renderApp(state: AppState): string {
         <div>
           <p class="aux-eyebrow">Consequence</p>
           <h2 id="trace-heading">Path replay</h2>
-          <p class="aux-desc">Walk the sample URL through the map you composed — auxiliary check, not the main edit.</p>
+          <p class="aux-desc">Trace for the sample URL above — updates automatically; use Replay path to re-run after map edits.</p>
         </div>
-        <button type="button" class="primary" data-replay>Replay path</button>
+        <button type="button" class="primary" data-replay title="Re-run path replay">Replay path</button>
       </div>
       <div class="aux-body">
         <div class="panel trace-panel">

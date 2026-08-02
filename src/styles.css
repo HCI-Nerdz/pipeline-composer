@@ -226,9 +226,9 @@ h1 {
 }
 
 .activity-probe {
-  margin-top: 1.35rem;
-  padding-top: 1.15rem;
-  border-top: 1px dashed color-mix(in oklab, var(--activity-line) 75%, transparent);
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px dashed color-mix(in oklab, var(--activity-line) 75%, transparent);
 }
 
 .activity-probe label {
@@ -533,6 +533,10 @@ button.ghost {
 
 .trace .status[data-s="skipped"] {
   color: var(--muted);
+}
+
+.trace .status[data-s="error"] {
+  color: var(--danger);
 }
 
 .banner {

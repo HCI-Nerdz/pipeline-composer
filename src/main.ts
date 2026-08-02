@@ -12,6 +12,8 @@ const rootEl = document.querySelector<HTMLDivElement>("#app");
 if (!rootEl) throw new Error("#app missing");
 const root: HTMLDivElement = rootEl;
 
+const SAMPLE_REPLAY_MS = 280;
+
 let state: AppState = {
   pipeline: createConflictPipeline(),
   sampleUrl: "https://ryanjohnson.dev/",
@@ -20,8 +22,58 @@ let state: AppState = {
   highlightIds: new Set(),
 };
 
+let sampleReplayTimer: ReturnType<typeof setTimeout> | null = null;
+
+interface SampleFieldFocus {
+  selectionStart: number | null;
+  selectionEnd: number | null;
+}
+
+function sampleFieldFocus(): SampleFieldFocus | null {
+  const active = document.activeElement;
+  if (!(active instanceof HTMLInputElement) || !active.matches("[data-sample]")) {
+    return null;
+  }
+  return {
+    selectionStart: active.selectionStart,
+    selectionEnd: active.selectionEnd,
+  };
+}
+
+function restoreSampleFieldFocus(focus: SampleFieldFocus | null) {
+  if (!focus) return;
+  const el = root.querySelector<HTMLInputElement>("[data-sample]");
+  if (!el) return;
+  el.focus();
+  if (focus.selectionStart !== null && focus.selectionEnd !== null) {
+    el.setSelectionRange(focus.selectionStart, focus.selectionEnd);
+  }
+}
+
 function paint() {
+  const focus = sampleFieldFocus();
   root.innerHTML = renderApp(state);
+  restoreSampleFieldFocus(focus);
+}
+
+function scheduleSampleReplay() {
+  if (sampleReplayTimer !== null) {
+    clearTimeout(sampleReplayTimer);
+  }
+  sampleReplayTimer = setTimeout(() => {
+    sampleReplayTimer = null;
+    state = runReplay(state);
+    paint();
+  }, SAMPLE_REPLAY_MS);
+}
+
+function replaySampleNow() {
+  if (sampleReplayTimer !== null) {
+    clearTimeout(sampleReplayTimer);
+    sampleReplayTimer = null;
+  }
+  state = runReplay(state);
+  paint();
 }
 
 root.addEventListener("click", (event) => {
@@ -60,9 +112,15 @@ root.addEventListener("click", (event) => {
   }
 
   if (t.closest("[data-replay]")) {
-    state = runReplay(state);
-    paint();
+    replaySampleNow();
   }
+});
+
+root.addEventListener("input", (event) => {
+  const t = event.target;
+  if (!(t instanceof HTMLInputElement) || !t.matches("[data-sample]")) return;
+  state = { ...state, sampleUrl: t.value };
+  scheduleSampleReplay();
 });
 
 root.addEventListener("change", (event) => {
@@ -78,12 +136,13 @@ root.addEventListener("change", (event) => {
       insertAt: null,
       highlightIds: new Set(),
     };
-    paint();
+    replaySampleNow();
     return;
   }
 
   if (t.matches("[data-sample]")) {
     state = { ...state, sampleUrl: t.value };
+    replaySampleNow();
   }
 });
 
