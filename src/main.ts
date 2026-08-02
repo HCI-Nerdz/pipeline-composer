@@ -1,12 +1,7 @@
 import "./styles.css";
-import { createConflictPipeline, createFixedPipeline } from "./model/demo-pipeline.ts";
-import {
-  createStep,
-  renderApp,
-  runReplay,
-  type AppState,
-} from "./ui/render.ts";
-import type { RuleKind } from "./model/types.ts";
+import { PipelineController, type ControllerState, type Scenario } from "./controller/index.ts";
+import type { RuleKind } from "./core/index.ts";
+import { renderApp } from "./ui/render.ts";
 
 const rootEl = document.querySelector<HTMLDivElement>("#app");
 if (!rootEl) throw new Error("#app missing");
@@ -14,13 +9,7 @@ const root: HTMLDivElement = rootEl;
 
 const SAMPLE_REPLAY_MS = 280;
 
-let state: AppState = {
-  pipeline: createConflictPipeline(),
-  sampleUrl: "https://ryanjohnson.dev/",
-  evaluation: null,
-  insertAt: null,
-  highlightIds: new Set(),
-};
+const controller = new PipelineController();
 
 let sampleReplayTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -50,7 +39,7 @@ function restoreSampleFieldFocus(focus: SampleFieldFocus | null) {
   }
 }
 
-function paint() {
+function paint(state: ControllerState) {
   const focus = sampleFieldFocus();
   root.innerHTML = renderApp(state);
   restoreSampleFieldFocus(focus);
@@ -62,8 +51,7 @@ function scheduleSampleReplay() {
   }
   sampleReplayTimer = setTimeout(() => {
     sampleReplayTimer = null;
-    state = runReplay(state);
-    paint();
+    controller.replay();
   }, SAMPLE_REPLAY_MS);
 }
 
@@ -72,9 +60,10 @@ function replaySampleNow() {
     clearTimeout(sampleReplayTimer);
     sampleReplayTimer = null;
   }
-  state = runReplay(state);
-  paint();
+  controller.replay();
 }
+
+controller.subscribe(paint);
 
 root.addEventListener("click", (event) => {
   const t = event.target;
@@ -82,32 +71,20 @@ root.addEventListener("click", (event) => {
 
   if (t.closest("[data-close-palette]") && !t.closest("[data-add-kind]")) {
     if (t.hasAttribute("data-close-palette") || t.classList.contains("palette-backdrop")) {
-      state = { ...state, insertAt: null };
-      paint();
+      controller.closePalette();
       return;
     }
   }
 
   const insert = t.closest<HTMLElement>("[data-insert]");
   if (insert) {
-    state = { ...state, insertAt: Number(insert.dataset.insert) };
-    paint();
+    controller.openInsertAt(Number(insert.dataset.insert));
     return;
   }
 
   const add = t.closest<HTMLElement>("[data-add-kind]");
-  if (add?.dataset.addKind && state.insertAt !== null) {
-    const kind = add.dataset.addKind as RuleKind;
-    const steps = [...state.pipeline.steps];
-    steps.splice(state.insertAt, 0, createStep(kind));
-    state = {
-      ...state,
-      pipeline: { ...state.pipeline, steps },
-      insertAt: null,
-      evaluation: null,
-      highlightIds: new Set(),
-    };
-    paint();
+  if (add?.dataset.addKind && controller.getState().insertAt !== null) {
+    controller.insertStep(add.dataset.addKind as RuleKind);
     return;
   }
 
@@ -119,7 +96,7 @@ root.addEventListener("click", (event) => {
 root.addEventListener("input", (event) => {
   const t = event.target;
   if (!(t instanceof HTMLInputElement) || !t.matches("[data-sample]")) return;
-  state = { ...state, sampleUrl: t.value };
+  controller.setSampleUrl(t.value);
   scheduleSampleReplay();
 });
 
@@ -128,24 +105,14 @@ root.addEventListener("change", (event) => {
   if (!(t instanceof HTMLSelectElement) && !(t instanceof HTMLInputElement)) return;
 
   if (t.matches("[data-scenario]")) {
-    const value = t.value;
-    state = {
-      pipeline: value === "fixed" ? createFixedPipeline() : createConflictPipeline(),
-      sampleUrl: value === "fixed" ? "https://ryanjohnson.dev/" : state.sampleUrl,
-      evaluation: null,
-      insertAt: null,
-      highlightIds: new Set(),
-    };
-    replaySampleNow();
+    controller.setScenario(t.value as Scenario);
     return;
   }
 
   if (t.matches("[data-sample]")) {
-    state = { ...state, sampleUrl: t.value };
+    controller.setSampleUrl(t.value);
     replaySampleNow();
   }
 });
 
-paint();
-state = runReplay(state);
-paint();
+paint(controller.getState());

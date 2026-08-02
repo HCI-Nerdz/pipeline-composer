@@ -1,33 +1,122 @@
 = pipeline-composer
+
 :toc:
 
+
+
 Typed *pipeline composer* / *processing map* UI for sequence-first control planes.
+
 Part of link:https://github.com/HCI-Nerdz[HCI Nerdz].
 
+
+
 * Essay: link:https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/[Sequence is the top-level]
+
 * Docs: link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Processing maps]
+
 * Demo: link:https://hci-nerdz.github.io/pipeline-composer/[GitHub Pages]
+
+
 
 == Idea
 
+
+
 If a system applies rules in order, the primary UI should be one ordered map:
 
+
+
 * Sequence at the root
+
 * Parallelism nested inside composite steps
+
 * Insert-between with *typed* sockets (only valid rule kinds)
+
 * Path replay on the same map
+
+
+
+== Architecture
+
+
+
+The repo is layered so the demo is one *adapter* over shared logic — not a mythical cross-framework UI compiler.
+
+
+
+[source]
+
+----
+
+src/core/           pipeline IR: types, acceptedKinds, evaluation, replay, serialize
+
+src/controller/     headless interaction state + actions (framework-agnostic TS)
+
+src/ui/render.ts    DOM string renderer (first adapter view)
+
+src/main.ts         binds DOM events → controller; subscribes → paint
+
+----
+
+
+
+* *Core* holds the shared intermediate representation: pipeline documents, typed insertion rules, path replay, and JSON serialize/parse helpers.
+
+* *Controller* owns selection/insert-at, palette open, sample URL, evaluation result, and highlight ids. Actions: `setScenario`, `setSampleUrl`, `openInsertAt`, `insertStep`, `closePalette`, `replay`.
+
+* *Adapters* are thin: map controller state to a renderer and wire user input back to actions.
+
+
+
+Future adapters (React, Solid, web components, canvas) would reuse `core` + `controller` unchanged; only the view layer swaps.
+
+
 
 == Commands
 
+
+
 [source,shell]
+
 ----
+
 pnpm install
+
 pnpm dev
+
 pnpm build
+
 ----
+
+
 
 Demo `base` is `/pipeline-composer/` for project Pages under `hci-nerdz.github.io`.
 
+
+
+== HCI Nerdz demo chrome
+
+
+
+Project demos hosted at `https://hci-nerdz.github.io/<project>/` should include a *sticky top brand row* that links back to link:https://hci-nerdz.github.io/[hci-nerdz.github.io] — not only in the hero or footer.
+
+
+
+* Use the org wordmark (logo mark + **HCI Nerdz** in Syne) as the primary link target.
+
+* Keep each demo’s own theme; the chrome is shared identity, not a full site re-skin.
+
+* Optional right-side label for the demo name (mono eyebrow).
+
+
+
+This demo implements the chrome in `index.html` (`site-chrome`) plus styles in `src/styles.css`.
+
+
+
 == Changelog
 
+
+
 See link:CHANGELOG.adoc[CHANGELOG.adoc].
+

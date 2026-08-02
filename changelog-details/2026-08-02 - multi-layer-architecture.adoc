@@ -1,0 +1,9 @@
+= 2026-08-02 — Multi-layer architecture scaffold
+
+Split the monolithic demo into shared layers so future UI adapters reuse the same core:
+
+* `src/core/` — pipeline IR (types, `acceptedKinds`, evaluation, replay, serialize/parse)
+* `src/controller/` — headless `PipelineController` with scenario, insert, palette, and replay actions
+* `src/ui/render.ts` + `src/main.ts` — first DOM adapter (events → controller, state → HTML)
+
+README documents the strategy: shared IR + headless controller + thin adapters (React/Solid/WC/canvas are future work). Attention zones and sample-URL auto-replay UX preserved.

@@ -1,21 +1,12 @@
-import { evaluatePipeline, type EvaluationResult } from "../model/evaluate.ts";
 import {
   RULE_CATALOG,
   acceptedKinds,
-  catalogEntry,
-  newId,
-  type Pipeline,
-  type RuleKind,
-  type Step,
-} from "../model/types.ts";
+  type EvaluationResult,
+} from "../core/index.ts";
+import type { ControllerState } from "../controller/state.ts";
+import type { Step } from "../core/index.ts";
 
-export interface AppState {
-  pipeline: Pipeline;
-  sampleUrl: string;
-  evaluation: EvaluationResult | null;
-  insertAt: number | null;
-  highlightIds: Set<string>;
-}
+export type { ControllerState };
 
 function esc(s: string): string {
   return s
@@ -43,7 +34,7 @@ function stepMeta(step: Step): string {
   return step.kind;
 }
 
-function renderStep(step: Step, state: AppState): string {
+function renderStep(step: Step, state: ControllerState): string {
   const status = [...state.evaluation?.events ?? []]
     .reverse()
     .find((e) => e.stepId === step.id)?.status;
@@ -72,7 +63,7 @@ function renderStep(step: Step, state: AppState): string {
   `;
 }
 
-function renderPipeline(state: AppState): string {
+function renderPipeline(state: ControllerState): string {
   const parts: string[] = [];
   const { steps } = state.pipeline;
 
@@ -90,7 +81,7 @@ function renderPipeline(state: AppState): string {
   return `<div class="pipeline" role="list">${parts.join("")}</div>`;
 }
 
-function renderTrace(state: AppState): string {
+function renderTrace(state: ControllerState): string {
   const ev = state.evaluation;
   if (!ev) {
     return `<p class="banner">Enter a sample URL above the map to walk it through this pipeline.</p>`;
@@ -121,7 +112,7 @@ function renderTrace(state: AppState): string {
   return `${banner}<ol class="trace">${items}</ol>`;
 }
 
-function renderPalette(state: AppState): string {
+function renderPalette(state: ControllerState): string {
   if (state.insertAt === null) return "";
 
   const afterKind =
@@ -157,10 +148,11 @@ function renderPalette(state: AppState): string {
   `;
 }
 
-export function renderApp(state: AppState): string {
+/** Render the full demo shell from headless controller state. */
+export function renderApp(state: ControllerState): string {
   return `
     <header class="hero">
-      <p class="eyebrow">HCI Nerdz · processing map</p>
+      <p class="eyebrow">Processing map</p>
       <h1>Pipeline composer</h1>
       <p class="lede">
         A <strong>pipeline</strong> is an ordered path a unit of work walks through stages — each
@@ -173,7 +165,6 @@ export function renderApp(state: AppState): string {
         <a href="https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/">Essay</a>
         <a href="https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html">Docs</a>
         <a href="https://github.com/HCI-Nerdz/pipeline-composer">Repo</a>
-        <a href="https://hci-nerdz.github.io/">HCI Nerdz</a>
       </div>
     </header>
 
@@ -250,59 +241,4 @@ export function renderApp(state: AppState): string {
   `;
 }
 
-export function createStep(kind: RuleKind): Step {
-  const entry = catalogEntry(kind);
-  const step: Step = {
-    id: newId(kind),
-    kind,
-    title: entry.defaultTitle,
-    summary: entry.defaultSummary,
-  };
-
-  if (kind === "redirect") {
-    step.config = {
-      from: "https://example.com",
-      to: "https://www.example.com/",
-    };
-    step.summary = "example.com → www.example.com";
-  }
-
-  if (kind === "parallel") {
-    step.join = "all";
-    step.children = [
-      {
-        id: newId("check"),
-        kind: "transform",
-        title: "Header check A",
-        summary: "Parallel probe A",
-      },
-      {
-        id: newId("check"),
-        kind: "transform",
-        title: "Header check B",
-        summary: "Parallel probe B",
-      },
-    ];
-  }
-
-  if (kind === "branch") {
-    step.children = [
-      {
-        id: newId("arm"),
-        kind: "transform",
-        title: "If host matches",
-        summary: "Taken when predicate matches",
-      },
-    ];
-  }
-
-  return step;
-}
-
-export function runReplay(state: AppState): AppState {
-  const evaluation = evaluatePipeline(state.pipeline, { url: state.sampleUrl });
-  const highlightIds = new Set(
-    evaluation.events.filter((e) => e.status === "matched" || e.status === "loop").map((e) => e.stepId),
-  );
-  return { ...state, evaluation, highlightIds };
-}
+export type { EvaluationResult };
