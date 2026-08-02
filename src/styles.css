@@ -208,6 +208,7 @@ h1 {
 
 /* —— Activity (composer): primary weight —— */
 .activity {
+  position: relative;
   margin: 0 0 2.75rem;
   padding: 1.75rem 1.5rem 1.5rem;
   border: 1px solid var(--activity-line);
@@ -264,10 +265,127 @@ h1 {
   padding: 0.35rem 0.25rem 0.65rem;
 }
 
-.activity-probe {
+.activity-probe-wrap {
+  position: relative;
   margin-bottom: 1.25rem;
   padding-bottom: 1.15rem;
   border-bottom: 1px dashed color-mix(in oklab, var(--activity-line) 75%, transparent);
+}
+
+.activity-probe {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* —— Compose coaching tip —— */
+.compose-tip {
+  position: absolute;
+  top: 0;
+  left: calc(36rem + 1.25rem);
+  width: min(14.5rem, calc(100% - 37.25rem));
+  padding: 0.85rem 2rem 0.75rem 0.9rem;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--activity-line) 85%, var(--accent));
+  background: color-mix(in oklab, var(--activity-bg) 88%, var(--bg0));
+  box-shadow: 0 10px 28px color-mix(in oklab, #000 28%, transparent);
+  z-index: 2;
+  animation: compose-tip-in 0.45s ease-out 0.35s both;
+}
+
+.compose-tip[hidden] {
+  display: none;
+}
+
+.compose-tip-close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  line-height: 1;
+  font-size: 1.1rem;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+}
+
+.compose-tip-close:hover {
+  color: var(--ink);
+  border: none;
+}
+
+.compose-tip-copy {
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--ink) 88%, var(--muted));
+}
+
+.compose-tip-copy strong {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.compose-tip-got-it {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
+}
+
+.compose-tip-arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 1;
+}
+
+.compose-tip-arrows[hidden] {
+  display: none;
+}
+
+.compose-tip-arrow {
+  fill: none;
+  stroke: color-mix(in oklab, var(--accent) 65%, var(--muted));
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 5 4;
+  animation: compose-tip-arrow-pulse 2.4s ease-in-out infinite;
+}
+
+.compose-tip-arrows marker path {
+  fill: color-mix(in oklab, var(--accent) 65%, var(--muted));
+}
+
+.compose-tip-arrow:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+@keyframes compose-tip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes compose-tip-arrow-pulse {
+  0%,
+  100% {
+    stroke-opacity: 0.45;
+  }
+
+  50% {
+    stroke-opacity: 0.95;
+  }
 }
 
 .activity-probe label {
@@ -475,6 +593,11 @@ h1 {
 
   .activity {
     padding: 1.25rem 1rem 1.15rem;
+  }
+
+  .compose-tip,
+  .compose-tip-arrows {
+    display: none !important;
   }
 }
 

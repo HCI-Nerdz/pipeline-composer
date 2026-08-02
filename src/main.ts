@@ -8,10 +8,14 @@ if (!rootEl) throw new Error("#app missing");
 const root: HTMLDivElement = rootEl;
 
 const SAMPLE_REPLAY_MS = 280;
+const COMPOSE_TIP_DISMISS_KEY = "pipeline-composer.compose-tip.dismissed";
+/** Insert indices to highlight — after TLS and after CF redirect (early-middle of map). */
+const COMPOSE_TIP_INSERT_TARGETS = [3, 4];
 
 const controller = new PipelineController();
 
 let sampleReplayTimer: ReturnType<typeof setTimeout> | null = null;
+let composeTipResizeTimer: ReturnType<typeof setTimeout> | null = null;
 
 interface SampleFieldFocus {
   selectionStart: number | null;
@@ -39,10 +43,98 @@ function restoreSampleFieldFocus(focus: SampleFieldFocus | null) {
   }
 }
 
+function composeTipDismissed(): boolean {
+  try {
+    return localStorage.getItem(COMPOSE_TIP_DISMISS_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function dismissComposeTip() {
+  try {
+    localStorage.setItem(COMPOSE_TIP_DISMISS_KEY, "1");
+  } catch {
+    /* storage unavailable — hide for this session only */
+  }
+  const tip = root.querySelector<HTMLElement>("[data-compose-tip]");
+  const svg = root.querySelector<SVGElement>("[data-compose-tip-svg]");
+  tip?.setAttribute("hidden", "");
+  svg?.setAttribute("hidden", "");
+}
+
+function syncComposeTipArrows() {
+  const tip = root.querySelector<HTMLElement>("[data-compose-tip]");
+  const svg = root.querySelector<SVGSVGElement>("[data-compose-tip-svg]");
+  const activity = root.querySelector<HTMLElement>(".activity");
+  if (!tip || !svg || !activity) return;
+
+  const hide =
+    composeTipDismissed() || window.matchMedia("(max-width: 840px)").matches;
+
+  if (hide) {
+    tip.setAttribute("hidden", "");
+    svg.setAttribute("hidden", "");
+    return;
+  }
+
+  tip.removeAttribute("hidden");
+  svg.removeAttribute("hidden");
+
+  const activityRect = activity.getBoundingClientRect();
+  const width = Math.max(1, Math.round(activityRect.width));
+  const height = Math.max(1, Math.round(activityRect.height));
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("width", String(width));
+  svg.setAttribute("height", String(height));
+
+  const tipRect = tip.getBoundingClientRect();
+  const origin = {
+    x: tipRect.left - activityRect.left + tipRect.width * 0.25,
+    y: tipRect.bottom - activityRect.top + 2,
+  };
+
+  const paths: string[] = [];
+  for (const index of COMPOSE_TIP_INSERT_TARGETS) {
+    const btn = root.querySelector<HTMLElement>(`[data-insert="${index}"]`);
+    if (!btn) continue;
+    const r = btn.getBoundingClientRect();
+    const target = {
+      x: r.left - activityRect.left + r.width / 2,
+      y: r.top - activityRect.top + r.height / 2,
+    };
+    const bendX = origin.x + (target.x - origin.x) * 0.35;
+    const bendY = origin.y + (target.y - origin.y) * 0.55;
+    paths.push(
+      `<path class="compose-tip-arrow" d="M ${origin.x.toFixed(1)} ${origin.y.toFixed(1)} Q ${bendX.toFixed(1)} ${bendY.toFixed(1)} ${target.x.toFixed(1)} ${target.y.toFixed(1)}" marker-end="url(#compose-tip-arrowhead)"/>`,
+    );
+  }
+
+  svg.innerHTML = `
+    <defs>
+      <marker id="compose-tip-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z"/>
+      </marker>
+    </defs>
+    ${paths.join("")}
+  `;
+}
+
+function scheduleComposeTipSync() {
+  if (composeTipResizeTimer !== null) {
+    clearTimeout(composeTipResizeTimer);
+  }
+  composeTipResizeTimer = setTimeout(() => {
+    composeTipResizeTimer = null;
+    syncComposeTipArrows();
+  }, 50);
+}
+
 function paint(state: ControllerState) {
   const focus = sampleFieldFocus();
   root.innerHTML = renderApp(state);
   restoreSampleFieldFocus(focus);
+  scheduleComposeTipSync();
 }
 
 function scheduleSampleReplay() {
@@ -90,6 +182,11 @@ root.addEventListener("click", (event) => {
 
   if (t.closest("[data-replay]")) {
     replaySampleNow();
+    return;
+  }
+
+  if (t.closest("[data-dismiss-compose-tip]")) {
+    dismissComposeTip();
   }
 });
 
@@ -114,5 +211,7 @@ root.addEventListener("change", (event) => {
     replaySampleNow();
   }
 });
+
+window.addEventListener("resize", scheduleComposeTipSync);
 
 paint(controller.getState());

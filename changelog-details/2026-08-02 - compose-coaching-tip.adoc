@@ -1,0 +1,3 @@
+= 2026-08-02 — Compose coaching tip
+
+Floating overlay in the activity section (beside Sample URL) orients first-time visitors to the **+** insert sockets on the pipeline map. Dashed SVG arrows aim at early-middle sockets (after TLS and CF redirect); dismiss via **Got it** or **×** persists in `localStorage`. Hidden below 840px so narrow viewports are not obscured.

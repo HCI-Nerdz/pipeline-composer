@@ -2,6 +2,14 @@
 
 
 
+== 2026-08-02 — Compose coaching tip
+
+
+
+* link:changelog-details/2026-08-02%20-%20compose-coaching-tip.adoc[Details]
+
+
+
 == 2026-08-02 — Eyebrow link type match
 
 

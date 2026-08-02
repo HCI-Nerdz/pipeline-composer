@@ -194,13 +194,25 @@ export function renderApp(state: ControllerState): string {
         <p class="activity-desc">${esc(state.pipeline.description)}</p>
       </div>
 
-      <div class="activity-probe">
-        <label>
-          Sample URL
-          <span class="field-hint">Replay updates as you type — the request you are thinking about while composing</span>
-          <input type="url" data-sample value="${esc(state.sampleUrl)}" placeholder="https://example.com/path" />
-        </label>
+      <div class="activity-probe-wrap">
+        <div class="activity-probe">
+          <label>
+            Sample URL
+            <span class="field-hint">Replay updates as you type — the request you are thinking about while composing</span>
+            <input type="url" data-sample value="${esc(state.sampleUrl)}" placeholder="https://example.com/path" />
+          </label>
+        </div>
+
+        <aside class="compose-tip" data-compose-tip aria-labelledby="compose-tip-heading" hidden>
+          <button type="button" class="compose-tip-close" data-dismiss-compose-tip aria-label="Dismiss tip">×</button>
+          <p id="compose-tip-heading" class="compose-tip-copy">
+            Add a step to the pipeline with the <strong>+</strong> controls between stages — each opens a typed palette.
+          </p>
+          <button type="button" class="compose-tip-got-it ghost" data-dismiss-compose-tip>Got it</button>
+        </aside>
       </div>
+
+      <svg class="compose-tip-arrows" data-compose-tip-svg aria-hidden="true" hidden></svg>
 
       <div class="map-shell">
         ${renderPipeline(state)}
