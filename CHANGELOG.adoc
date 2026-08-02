@@ -2,6 +2,14 @@
 
 
 
+== 2026-08-02 — Hero breadcrumb org link
+
+
+
+* link:changelog-details/2026-08-02%20-%20hero-breadcrumb-org-link.adoc[Details]
+
+
+
 == 2026-08-02 — Minimal link-back and hero copy
 
 

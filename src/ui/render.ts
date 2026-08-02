@@ -152,7 +152,11 @@ function renderPalette(state: ControllerState): string {
 export function renderApp(state: ControllerState): string {
   return `
     <header class="hero">
-      <p class="eyebrow">Processing-map prototype</p>
+      <p class="eyebrow">
+        <a class="eyebrow-link" href="https://hci-nerdz.github.io/">HCI Nerdz</a>
+        <span class="eyebrow-sep" aria-hidden="true">·</span>
+        <span class="eyebrow-label">Processing map</span>
+      </p>
       <h1>Pipeline composer</h1>
       <p class="hero-tagline">A processing-map demo — sequence-first composition for ordered systems.</p>
       <p class="lede">

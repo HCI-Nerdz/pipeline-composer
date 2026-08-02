@@ -98,11 +98,11 @@ Demo `base` is `/pipeline-composer/` for project Pages under `hci-nerdz.github.i
 
 
 
-Project demos hosted at `https://hci-nerdz.github.io/<project>/` need a *minimal org link-back* — visible text **HCI Nerdz** linking to link:https://hci-nerdz.github.io/[hci-nerdz.github.io]. Do not clone the Astro org site's full header or nav; that reads as half-baked site chrome.
+Project demos hosted at `https://hci-nerdz.github.io/<project>/` need a *minimal org link-back* — not a cloned Astro site header or sticky nav bar. Prefer a hero breadcrumb eyebrow on the same line as the pattern label, e.g. linked **HCI Nerdz** · Processing map above the demo title.
 
 
 
-* Place the link outside `#app` (or in a stable hero row) so controller re-renders cannot remove it.
+* Use a divider (· or similar) between the org link and the pattern/category label.
 
 * Keep each demo’s own theme; shared design tokens are optional, not required.
 
@@ -110,11 +110,11 @@ Project demos hosted at `https://hci-nerdz.github.io/<project>/` need a *minimal
 
 
 
-Sharing a full header package across the Astro site and Vite demos is optional; minimal link-back plus shared tokens is enough until demos are hosted under the org site.
+Sharing a full header package across the Astro site and Vite demos is optional; breadcrumb link-back plus shared tokens is enough until demos are hosted under the org site.
 
 
 
-This demo implements the link in `index.html` (`org-linkback-wrap`) with a fallback in `src/ui/site-chrome.ts`.
+This demo implements the breadcrumb in `src/ui/render.ts` (`eyebrow-link` · `eyebrow-label`).
 
 
 

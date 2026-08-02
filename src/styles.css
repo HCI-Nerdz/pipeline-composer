@@ -62,33 +62,6 @@ a {
   border: 0;
 }
 
-/* —— Org link-back (HCI Nerdz demos convention) —— */
-.org-linkback-wrap {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1rem 1.25rem 0;
-}
-
-.org-linkback {
-  display: inline-block;
-  color: var(--muted);
-  text-decoration: none;
-  font-family: var(--brand);
-  font-weight: 600;
-  font-size: 0.92rem;
-  letter-spacing: -0.01em;
-  transition: color 0.15s ease;
-}
-
-.org-linkback:visited {
-  color: var(--muted);
-}
-
-.org-linkback:hover,
-.org-linkback:focus-visible {
-  color: var(--accent);
-}
-
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -102,12 +75,43 @@ a {
 }
 
 .eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
   font-family: var(--mono);
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 0.75rem;
+}
+
+.eyebrow-link {
+  font-family: var(--brand);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.eyebrow-link:visited {
+  color: var(--ink);
+}
+
+.eyebrow-link:hover,
+.eyebrow-link:focus-visible {
+  color: var(--accent);
+}
+
+.eyebrow-sep {
+  opacity: 0.55;
+}
+
+.eyebrow-label {
+  color: var(--muted);
 }
 
 h1 {

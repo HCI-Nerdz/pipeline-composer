@@ -1,0 +1,7 @@
+= 2026-08-02 — Hero breadcrumb org link
+
+Moved the org link from a separate top nav into the hero eyebrow:
+
+* Eyebrow row: linked **HCI Nerdz** · Processing map — same-line breadcrumb above the H1
+* Removed `org-linkback-wrap` from `index.html` and deleted `site-chrome.ts`
+* **Pipeline composer** stays the H1; tagline under H1 clarifies this is a processing-map demo
