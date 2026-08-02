@@ -158,11 +158,11 @@ export function renderApp(state: AppState): string {
       <p class="eyebrow">HCI Nerdz · processing map</p>
       <h1>Pipeline composer</h1>
       <p class="lede">
-        If you set CDN redirects, cache rules, or edge middleware, you are already editing a
-        <strong>pipeline</strong> — the ordered path a request walks (DNS → proxy → rules → origin)
-        before your site answers. This composer puts that path on one map: insert typed steps between
-        neighbors, nest parallel checks inside a stage, and replay a sample URL so conflicting rules
-        show up here — not only as a browser redirect loop.
+        A <strong>pipeline</strong> is an ordered path a unit of work walks through stages — each
+        stage can transform it, stop it, or pass it on — before a final result. This composer puts
+        that order on one map: insert typed steps between neighbors, nest parallel checks inside a
+        stage, and replay a sample so conflicting rules show up here instead of only in production.
+        Example: a web request walking DNS → proxy → redirects → cache → origin (the demo below).
       </p>
       <div class="hero-links">
         <a href="https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/">Essay</a>
