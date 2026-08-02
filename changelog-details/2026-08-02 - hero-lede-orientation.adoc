@@ -1,0 +1,3 @@
+= 2026-08-02 — Hero lede orientation
+
+Rewrote the demo intro so the first sentence situates CDN/edge configuration, then defines a pipeline as the ordered request path, then the composer affordances.

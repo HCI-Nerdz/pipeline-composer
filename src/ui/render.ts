@@ -158,8 +158,11 @@ export function renderApp(state: AppState): string {
       <p class="eyebrow">HCI Nerdz · processing map</p>
       <h1>Pipeline composer</h1>
       <p class="lede">
-        Sequence is the top-level. Insert typed steps between neighbors. Nest parallelism inside a step.
-        Replay a request on the same map that configures the path — so conflicting redirects show up here, not only in the browser.
+        If you set CDN redirects, cache rules, or edge middleware, you are already editing a
+        <strong>pipeline</strong> — the ordered path a request walks (DNS → proxy → rules → origin)
+        before your site answers. This composer puts that path on one map: insert typed steps between
+        neighbors, nest parallel checks inside a stage, and replay a sample URL so conflicting rules
+        show up here — not only as a browser redirect loop.
       </p>
       <div class="hero-links">
         <a href="https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/">Essay</a>
