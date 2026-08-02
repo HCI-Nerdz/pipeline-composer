@@ -1,0 +1,3 @@
+= 2026-08-02 — Eyebrow link type match
+
+Hero breadcrumb **HCI Nerdz** link now uses the same mono eyebrow typography as **Processing map** at rest; hover/focus adds a subtle underline and slightly brighter ink.

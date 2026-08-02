@@ -88,22 +88,21 @@ a {
 }
 
 .eyebrow-link {
-  font-family: var(--brand);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-transform: none;
-  color: var(--ink);
+  color: inherit;
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 .eyebrow-link:visited {
-  color: var(--ink);
+  color: inherit;
 }
 
 .eyebrow-link:hover,
 .eyebrow-link:focus-visible {
-  color: var(--accent);
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--muted) 65%, var(--ink));
+  text-underline-offset: 0.15em;
 }
 
 .eyebrow-sep {
