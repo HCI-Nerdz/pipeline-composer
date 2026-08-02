@@ -2,6 +2,14 @@
 
 
 
+== 2026-08-01 — Essay title and scope
+
+
+
+* link:changelog-details/2026-08-01%20-%20essay-title-scope.adoc[Details]
+
+
+
 == 2026-08-02 — Hero breadcrumb org link
 
 

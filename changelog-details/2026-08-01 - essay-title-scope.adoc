@@ -1,0 +1,3 @@
+= 2026-08-01 — Essay title and scope
+
+Updated README essay link and demo footnote to the retitled blog post (*Sequence as the top-level*).

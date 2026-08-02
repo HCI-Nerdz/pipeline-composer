@@ -238,7 +238,7 @@ export function renderApp(state: ControllerState): string {
 
     <p class="footnote">
       Prototype for the pattern described in
-      <em>Sequence is the top-level: pipeline composer interfaces</em>.
+      <em>Sequence as the top-level: pipeline composer interfaces</em>.
       Not a Cloudflare/GitHub admin replacement — a legibility experiment.
     </p>
 
