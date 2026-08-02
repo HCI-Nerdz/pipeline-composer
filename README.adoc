@@ -1,0 +1,33 @@
+= pipeline-composer
+:toc:
+
+Typed *pipeline composer* / *processing map* UI for sequence-first control planes.
+Part of link:https://github.com/HCI-Nerdz[HCI Nerdz].
+
+* Essay: link:https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/[Sequence is the top-level]
+* Docs: link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Processing maps]
+* Demo: link:https://hci-nerdz.github.io/pipeline-composer/[GitHub Pages]
+
+== Idea
+
+If a system applies rules in order, the primary UI should be one ordered map:
+
+* Sequence at the root
+* Parallelism nested inside composite steps
+* Insert-between with *typed* sockets (only valid rule kinds)
+* Path replay on the same map
+
+== Commands
+
+[source,shell]
+----
+pnpm install
+pnpm dev
+pnpm build
+----
+
+Demo `base` is `/pipeline-composer/` for project Pages under `hci-nerdz.github.io`.
+
+== Changelog
+
+See link:CHANGELOG.adoc[CHANGELOG.adoc].

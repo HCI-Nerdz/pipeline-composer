@@ -1,0 +1,5 @@
+= Changelog
+
+== 2026-08-02 — Initial prototype
+
+* link:changelog-details/2026-08-02%20-%20initial-prototype.adoc[Details]

@@ -1,0 +1,8 @@
+= 2026-08-02 — Initial prototype
+
+First cut of the processing-map demo:
+
+* Core model: typed steps, accepted socket kinds, parallel/branch composites
+* Motivating scenario: apex/`www` redirect conflict (Cloudflare vs GitHub Pages)
+* Interactive composer: insert-between palette, scenario switch, path replay with loop detection
+* Vite + TypeScript demo deployed to GitHub Pages at `/pipeline-composer/`
