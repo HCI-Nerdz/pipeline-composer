@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-08-02 — Step card text overflow
+
+* link:changelog-details/2026-08-02%20-%20step-card-text-overflow.adoc[Details]
+
 == 2026-08-02 — Initial prototype
 
 * link:changelog-details/2026-08-02%20-%20initial-prototype.adoc[Details]

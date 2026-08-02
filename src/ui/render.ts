@@ -25,9 +25,18 @@ function esc(s: string): string {
     .replaceAll('"', "&quot;");
 }
 
+function shortHost(url: string): string {
+  try {
+    const u = new URL(url);
+    return u.host + (u.pathname === "/" ? "" : u.pathname.replace(/\/$/, ""));
+  } catch {
+    return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  }
+}
+
 function stepMeta(step: Step): string {
   if (step.kind === "redirect" && step.config?.from && step.config?.to) {
-    return `${step.config.from} → ${step.config.to}`;
+    return `${shortHost(step.config.from)} → ${shortHost(step.config.to)}`;
   }
   if (step.config?.vendor) return step.config.vendor;
   if (step.config?.proxy) return step.config.proxy;

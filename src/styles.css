@@ -232,7 +232,9 @@ button.ghost {
 
 .step {
   flex: 0 0 auto;
-  width: 11.5rem;
+  width: 12.5rem;
+  min-width: 0;
+  overflow: hidden;
   background: var(--step);
   border: 1px solid var(--step-border);
   border-radius: 0.65rem;
@@ -242,6 +244,13 @@ button.ghost {
   gap: 0.4rem;
   box-shadow: 0 10px 30px color-mix(in oklab, #000 35%, transparent);
   transition: border-color 0.15s ease, box-shadow 0.2s ease;
+}
+
+.step > * {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .step[data-active="true"] {
@@ -270,6 +279,7 @@ button.ghost {
   margin: 0;
   font-size: 0.95rem;
   letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
 .step .summary {
@@ -277,11 +287,13 @@ button.ghost {
   font-size: 0.8rem;
   color: var(--muted);
   flex: 1;
+  line-height: 1.35;
 }
 
 .step .meta {
   font-family: var(--mono);
   font-size: 0.68rem;
+  line-height: 1.35;
   color: var(--ink);
   opacity: 0.85;
   border-top: 1px dashed var(--line);
@@ -304,6 +316,8 @@ button.ghost {
   padding: 0.3rem 0.4rem;
   border-radius: 0.3rem;
   background: var(--bg2);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .panels {

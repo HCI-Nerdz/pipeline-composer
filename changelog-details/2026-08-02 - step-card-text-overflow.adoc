@@ -1,0 +1,6 @@
+= 2026-08-02 — Step card text overflow
+
+Step cards clipped long redirect URLs and other unbroken strings.
+
+* Wrap/break text inside fixed-width steps
+* Show compact host paths in redirect meta (not full `https://` URLs)
