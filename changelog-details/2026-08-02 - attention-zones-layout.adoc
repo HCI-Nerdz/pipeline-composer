@@ -1,0 +1,7 @@
+= 2026-08-02 — Attention zones layout
+
+Separated concept, context, compose, and consequence:
+
+* Quiet scenario bar (mental setup)
+* Spacious green-tinted activity section for the map + sample URL
+* Path replay as an auxiliary section with the Replay action in its header

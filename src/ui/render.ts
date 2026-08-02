@@ -93,7 +93,7 @@ function renderPipeline(state: AppState): string {
 function renderTrace(state: AppState): string {
   const ev = state.evaluation;
   if (!ev) {
-    return `<p class="banner">Press <strong>Replay path</strong> to walk a sample URL through the map.</p>`;
+    return `<p class="banner">Press <strong>Replay path</strong> above to walk the sample URL through this map.</p>`;
   }
 
   const banner =
@@ -172,50 +172,68 @@ export function renderApp(state: AppState): string {
       </div>
     </header>
 
-    <div class="toolbar">
-      <label>
-        Scenario
-        <select data-scenario>
-          <option value="conflict" ${state.pipeline.id === "edge-conflict" ? "selected" : ""}>Apex/www conflict</option>
-          <option value="fixed" ${state.pipeline.id === "edge-fixed" ? "selected" : ""}>Aligned canonical host</option>
-        </select>
-      </label>
-      <label>
-        Sample URL
-        <input type="url" data-sample value="${esc(state.sampleUrl)}" />
-      </label>
-      <button type="button" class="primary" data-replay>Replay path</button>
-    </div>
-
-    <section class="map-shell" aria-labelledby="map-heading">
-      <div class="map-title">
-        <div>
-          <h2 id="map-heading">${esc(state.pipeline.title)}</h2>
-          <p>${esc(state.pipeline.description)}</p>
-        </div>
+    <section class="context-bar" aria-label="Demo scenario">
+      <div class="context-bar-inner">
+        <p class="context-label">Scenario</p>
+        <label class="context-field">
+          <span class="sr-only">Which pipeline story to load</span>
+          <select data-scenario>
+            <option value="conflict" ${state.pipeline.id === "edge-conflict" ? "selected" : ""}>Apex/www conflict</option>
+            <option value="fixed" ${state.pipeline.id === "edge-fixed" ? "selected" : ""}>Aligned canonical host</option>
+          </select>
+        </label>
+        <p class="context-hint">Loads a starting pipeline — mental setup before you edit the map.</p>
       </div>
-      ${renderPipeline(state)}
     </section>
 
-    <div class="panels">
-      <section class="panel" aria-labelledby="trace-heading">
-        <h2 id="trace-heading">Path replay</h2>
-        ${renderTrace(state)}
-      </section>
-      <section class="panel" aria-labelledby="idea-heading">
-        <h2 id="idea-heading">Why this UI</h2>
-        <p class="banner">
-          Cloudflare’s redirect rule and GitHub’s primary domain were never shown as one spine.
-          Proxying put both in the same request path — the loop was a visibility bug as much as a config bug.
-        </p>
-        <ul style="margin:0;padding-left:1.1rem;color:var(--muted);font-size:0.92rem">
-          <li>One map for one runtime order</li>
-          <li>Insert between steps; palette is type-filtered</li>
-          <li>Parallelism nests inside composite steps</li>
-          <li>Replay beats folklore about “how the edge really works”</li>
-        </ul>
-      </section>
-    </div>
+    <section class="activity" aria-labelledby="map-heading">
+      <div class="activity-head">
+        <p class="activity-eyebrow">Compose</p>
+        <h2 id="map-heading">${esc(state.pipeline.title)}</h2>
+        <p class="activity-desc">${esc(state.pipeline.description)}</p>
+      </div>
+
+      <div class="map-shell">
+        ${renderPipeline(state)}
+      </div>
+
+      <div class="activity-probe">
+        <label>
+          Sample URL
+          <span class="field-hint">The request you are thinking about while composing</span>
+          <input type="url" data-sample value="${esc(state.sampleUrl)}" />
+        </label>
+      </div>
+    </section>
+
+    <section class="aux" aria-labelledby="trace-heading">
+      <div class="aux-head">
+        <div>
+          <p class="aux-eyebrow">Consequence</p>
+          <h2 id="trace-heading">Path replay</h2>
+          <p class="aux-desc">Walk the sample URL through the map you composed — auxiliary check, not the main edit.</p>
+        </div>
+        <button type="button" class="primary" data-replay>Replay path</button>
+      </div>
+      <div class="aux-body">
+        <div class="panel trace-panel">
+          ${renderTrace(state)}
+        </div>
+        <aside class="panel idea-panel" aria-labelledby="idea-heading">
+          <h3 id="idea-heading">Why this UI</h3>
+          <p class="banner">
+            Cloudflare’s redirect rule and GitHub’s primary domain were never shown as one spine.
+            Proxying put both in the same request path — the loop was a visibility bug as much as a config bug.
+          </p>
+          <ul>
+            <li>One map for one runtime order</li>
+            <li>Insert between steps; palette is type-filtered</li>
+            <li>Parallelism nests inside composite steps</li>
+            <li>Replay beats folklore about “how the edge really works”</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
 
     <p class="footnote">
       Prototype for the pattern described in

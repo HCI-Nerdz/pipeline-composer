@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-08-02 — Attention zones layout
+
+* link:changelog-details/2026-08-02%20-%20attention-zones-layout.adoc[Details]
+
 == 2026-08-02 — Hero lede orientation
 
 * link:changelog-details/2026-08-02%20-%20hero-lede-orientation.adoc[Details]
