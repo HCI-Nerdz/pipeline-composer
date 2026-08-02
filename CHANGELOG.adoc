@@ -2,6 +2,14 @@
 
 
 
+== 2026-08-02 — Minimal link-back and hero copy
+
+
+
+* link:changelog-details/2026-08-02%20-%20minimal-linkback-hero-copy.adoc[Details]
+
+
+
 == 2026-08-02 — Brand link visibility
 
 

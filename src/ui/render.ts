@@ -152,8 +152,9 @@ function renderPalette(state: ControllerState): string {
 export function renderApp(state: ControllerState): string {
   return `
     <header class="hero">
-      <p class="eyebrow">Processing map</p>
+      <p class="eyebrow">Processing-map prototype</p>
       <h1>Pipeline composer</h1>
+      <p class="hero-tagline">A processing-map demo — sequence-first composition for ordered systems.</p>
       <p class="lede">
         A <strong>pipeline</strong> is an ordered path a unit of work walks through stages — each
         stage can transform it, stop it, or pass it on — before a final result. This composer puts

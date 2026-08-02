@@ -1,0 +1,7 @@
+= 2026-08-02 — Minimal link-back and hero copy
+
+Replaced the sticky faux site header with a compact org link-back:
+
+* Text-only **HCI Nerdz** link in `org-linkback-wrap` — no logo row, no demo tag mimicking homepage nav
+* Hero eyebrow now reads *Processing-map prototype*; tagline under H1 clarifies pipeline composer as a demo of the pattern
+* README documents minimal link-back convention for future project demos

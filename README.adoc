@@ -98,19 +98,23 @@ Demo `base` is `/pipeline-composer/` for project Pages under `hci-nerdz.github.i
 
 
 
-Project demos hosted at `https://hci-nerdz.github.io/<project>/` should include a *sticky top brand row* that links back to link:https://hci-nerdz.github.io/[hci-nerdz.github.io] — not only in the hero or footer.
+Project demos hosted at `https://hci-nerdz.github.io/<project>/` need a *minimal org link-back* — visible text **HCI Nerdz** linking to link:https://hci-nerdz.github.io/[hci-nerdz.github.io]. Do not clone the Astro org site's full header or nav; that reads as half-baked site chrome.
 
 
 
-* Use the org wordmark (logo mark + **HCI Nerdz** in Syne) as the primary link target.
+* Place the link outside `#app` (or in a stable hero row) so controller re-renders cannot remove it.
 
-* Keep each demo’s own theme; the chrome is shared identity, not a full site re-skin.
+* Keep each demo’s own theme; shared design tokens are optional, not required.
 
-* Optional right-side label for the demo name (mono eyebrow).
+* Full site navigation lives on the org site. True uniformity later may come from embedding demos as Astro routes/islands — not copying headers across Vite demos.
 
 
 
-This demo implements the chrome in `index.html` (`site-chrome`) plus styles in `src/styles.css`.
+Sharing a full header package across the Astro site and Vite demos is optional; minimal link-back plus shared tokens is enough until demos are hosted under the org site.
+
+
+
+This demo implements the link in `index.html` (`org-linkback-wrap`) with a fallback in `src/ui/site-chrome.ts`.
 
 
 
