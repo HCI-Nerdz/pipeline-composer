@@ -2,6 +2,14 @@
 
 
 
+== 2026-08-02 — Brand link visibility
+
+
+
+* link:changelog-details/2026-08-02%20-%20brand-link-visibility.adoc[Details]
+
+
+
 == 2026-08-02 — HCI Nerdz demo chrome
 
 

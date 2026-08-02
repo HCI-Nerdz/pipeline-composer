@@ -1,0 +1,5 @@
+= 2026-08-02 — Brand link visibility
+
+* Hero eyebrow lost **HCI Nerdz** during the controller refactor; sticky chrome is now hardened so the wordmark text stays visible on narrow viewports.
+* `ensureSiteChrome()` mounts the org link-back outside `#app` so controller re-renders cannot remove it.
+* Brand row uses direct anchor text (org site pattern), `flex-shrink: 0`, and `:visited` color lock for readable ink on the dark theme.

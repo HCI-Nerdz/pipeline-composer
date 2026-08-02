@@ -81,26 +81,41 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  flex-shrink: 0;
+  white-space: nowrap;
   color: var(--ink);
   text-decoration: none;
   font-family: var(--brand);
   font-weight: 700;
   font-size: 1.02rem;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   transition: color 0.15s ease;
 }
 
-.site-brand:hover {
+.site-brand:visited {
+  color: var(--ink);
+}
+
+.site-brand:hover,
+.site-brand:focus-visible {
   color: var(--accent);
 }
 
 .site-brand img {
   display: block;
   flex: 0 0 auto;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .site-chrome-tag {
   margin: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: var(--mono);
   font-size: 0.68rem;
   letter-spacing: 0.08em;

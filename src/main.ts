@@ -2,6 +2,9 @@ import "./styles.css";
 import { PipelineController, type ControllerState, type Scenario } from "./controller/index.ts";
 import type { RuleKind } from "./core/index.ts";
 import { renderApp } from "./ui/render.ts";
+import { ensureSiteChrome } from "./ui/site-chrome.ts";
+
+ensureSiteChrome();
 
 const rootEl = document.querySelector<HTMLDivElement>("#app");
 if (!rootEl) throw new Error("#app missing");
