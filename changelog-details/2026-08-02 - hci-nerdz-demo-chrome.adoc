@@ -1,0 +1,7 @@
+= 2026-08-02 — HCI Nerdz demo chrome
+
+Added a sticky top brand row linking to the org site:
+
+* Logo mark + **HCI Nerdz** (Syne) in `index.html` — convention for `hci-nerdz.github.io/<project>/` demos
+* Demo tag on the right; hero eyebrow no longer duplicates the org name
+* Documented in README.adoc under *HCI Nerdz demo chrome*

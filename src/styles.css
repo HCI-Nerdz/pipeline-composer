@@ -20,6 +20,7 @@
   --aux-bg: #1c2120;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --sans: "DM Sans", system-ui, sans-serif;
+  --brand: "Syne", "Avenir Next", "Segoe UI", sans-serif;
   color-scheme: dark;
 }
 
@@ -61,10 +62,56 @@ a {
   border: 0;
 }
 
+/* —— Org link-back (HCI Nerdz demos convention) —— */
+.site-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in oklab, var(--bg0) 90%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--brand);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: -0.02em;
+  transition: color 0.15s ease;
+}
+
+.site-brand:hover {
+  color: var(--accent);
+}
+
+.site-brand img {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.site-chrome-tag {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 5rem;
+  padding: 1.75rem 1.25rem 5rem;
 }
 
 /* —— Concept —— */
