@@ -1,126 +1,91 @@
+ifndef::env-github[:icons: font]
+:toc: preamble
+:toclevels: 2
+:sectanchors:
+
+ifndef::env-github[]
+image:https://img.shields.io/github/contributors/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Contributors,link=https://github.com/HCI-Nerdz/pipeline-composer/graphs/contributors]
+image:https://img.shields.io/github/forks/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Forks,link=https://github.com/HCI-Nerdz/pipeline-composer/network/members]
+image:https://img.shields.io/github/stars/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Stars,link=https://github.com/HCI-Nerdz/pipeline-composer/stargazers]
+image:https://img.shields.io/github/issues/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Issues,link=https://github.com/HCI-Nerdz/pipeline-composer/issues]
+endif::[]
+
+ifdef::env-github[]
+image:https://img.shields.io/github/contributors/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Contributors]
+image:https://img.shields.io/github/forks/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Forks]
+image:https://img.shields.io/github/stars/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Stars]
+image:https://img.shields.io/github/issues/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Issues]
+endif::[]
+
 = pipeline-composer
 
-:toc:
+Typed pipeline composer / processing-map UI for sequence-first control planes.
 
-
-
-Typed *pipeline composer* / *processing map* UI for sequence-first control planes.
+link:https://hci-nerdz.github.io/pipeline-composer/[Try the demo] ·
+link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Explore the docs] ·
+link:https://github.com/HCI-Nerdz/pipeline-composer/issues[Report Bug]
 
 Part of link:https://github.com/HCI-Nerdz[HCI Nerdz].
 
-
-
 * Essay: link:https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/[Sequence as the top-level]
 
-* Docs: link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Processing maps]
-
-* Demo: link:https://hci-nerdz.github.io/pipeline-composer/[GitHub Pages]
-
-
-
-== Idea
-
-
+== About The Project
 
 If a system applies rules in order, the primary UI should be one ordered map:
 
-
-
 * Sequence at the root
-
 * Parallelism nested inside composite steps
-
 * Insert-between with *typed* sockets (only valid rule kinds)
-
 * Path replay on the same map
 
-
-
-== Architecture
-
-
+=== Architecture
 
 The repo is layered so the demo is one *adapter* over shared logic — not a mythical cross-framework UI compiler.
 
-
-
 [source]
-
 ----
-
 src/core/           pipeline IR: types, acceptedKinds, evaluation, replay, serialize
-
 src/controller/     headless interaction state + actions (framework-agnostic TS)
-
 src/ui/render.ts    DOM string renderer (first adapter view)
-
 src/main.ts         binds DOM events → controller; subscribes → paint
-
 ----
-
-
 
 * *Core* holds the shared intermediate representation: pipeline documents, typed insertion rules, path replay, and JSON serialize/parse helpers.
-
 * *Controller* owns selection/insert-at, palette open, sample URL, evaluation result, and highlight ids. Actions: `setScenario`, `setSampleUrl`, `openInsertAt`, `insertStep`, `closePalette`, `replay`.
-
 * *Adapters* are thin: map controller state to a renderer and wire user input back to actions.
-
-
 
 Future adapters (React, Solid, web components, canvas) would reuse `core` + `controller` unchanged; only the view layer swaps.
 
-
-
-== Commands
-
-
+== Installation
 
 [source,shell]
-
 ----
-
 pnpm install
-
 pnpm dev
-
 pnpm build
-
 ----
-
-
 
 Demo `base` is `/pipeline-composer/` for project Pages under `hci-nerdz.github.io`.
 
-
-
-== HCI Nerdz demo chrome
-
-
+=== HCI Nerdz demo chrome
 
 Project demos hosted at `https://hci-nerdz.github.io/<project>/` need a *minimal org link-back* — not a cloned Astro site header or sticky nav bar. Prefer a hero breadcrumb eyebrow on the same line as the pattern label, e.g. linked **HCI Nerdz** · Processing map above the demo title.
 
-
-
 * Use a divider (· or similar) between the org link and the pattern/category label.
-
-* Keep each demo’s own theme; shared design tokens are optional, not required.
-
+* Keep each demo's own theme; shared design tokens are optional, not required.
 * Full site navigation lives on the org site. True uniformity later may come from embedding demos as Astro routes/islands — not copying headers across Vite demos.
-
-
 
 Sharing a full header package across the Astro site and Vite demos is optional; breadcrumb link-back plus shared tokens is enough until demos are hosted under the org site.
 
-
-
 This demo implements the breadcrumb in `src/ui/render.ts` (`eyebrow-link` · `eyebrow-label`).
-
-
 
 == Changelog
 
-
-
 See link:CHANGELOG.adoc[CHANGELOG.adoc].
 
+== Contact
+
+HCI Nerdz — [ORG_EMAIL]
+
+* Project: https://github.com/HCI-Nerdz/pipeline-composer
+* Site: https://hci-nerdz.github.io
