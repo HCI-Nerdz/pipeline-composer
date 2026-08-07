@@ -3,7 +3,29 @@ ifndef::env-github[:icons: font]
 :toclevels: 2
 :sectanchors:
 
-[[readme-top]]
+ifdef::env-github[]
+++++
+<a id="readme-top"></a>
+<div align="center">
+<a href="https://github.com/HCI-Nerdz/pipeline-composer/graphs/contributors"><img src="https://img.shields.io/github/contributors/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge" alt="Contributors"></a>
+<a href="https://github.com/HCI-Nerdz/pipeline-composer/network/members"><img src="https://img.shields.io/github/forks/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge" alt="Forks"></a>
+<a href="https://github.com/HCI-Nerdz/pipeline-composer/stargazers"><img src="https://img.shields.io/github/stars/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge" alt="Stars"></a>
+<a href="https://github.com/HCI-Nerdz/pipeline-composer/issues"><img src="https://img.shields.io/github/issues/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge" alt="Issues"></a>
+<br />
+<h3 align="center">pipeline-composer</h3>
+<p align="center">
+Typed pipeline composer / processing-map UI for sequence-first control planes.<br /><br />
+<a href="https://hci-nerdz.github.io/pipeline-composer/">Try the demo</a>
+&middot;
+<a href="https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html">Explore the docs</a>
+&middot;
+<a href="https://github.com/HCI-Nerdz/pipeline-composer/issues">Report Bug</a>
+</p>
+</div>
+++++
+endif::[]
+
+ifndef::env-github[]
 image:https://img.shields.io/github/contributors/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Contributors,link=https://github.com/HCI-Nerdz/pipeline-composer/graphs/contributors]
 image:https://img.shields.io/github/forks/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Forks,link=https://github.com/HCI-Nerdz/pipeline-composer/network/members]
 image:https://img.shields.io/github/stars/HCI-Nerdz/pipeline-composer.svg?style=for-the-badge[Stars,link=https://github.com/HCI-Nerdz/pipeline-composer/stargazers]
@@ -13,14 +35,16 @@ image:https://img.shields.io/github/issues/HCI-Nerdz/pipeline-composer.svg?style
 
 Typed pipeline composer / processing-map UI for sequence-first control planes.
 
-link:https://hci-nerdz.github.io/pipeline-composer/[Try the demo] ·
-link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Explore the docs] ·
+link:https://hci-nerdz.github.io/pipeline-composer/[Try the demo] 
+· 
+link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Explore the docs] 
+· 
 link:https://github.com/HCI-Nerdz/pipeline-composer/issues[Report Bug]
+endif::[]
 
 Part of link:https://github.com/HCI-Nerdz[HCI Nerdz].
 
 * Essay: link:https://hci-nerdz.github.io/blog/pipeline-composer-interfaces/[Sequence as the top-level]
-
 == About The Project
 
 If a system applies rules in order, the primary UI should be one ordered map:
@@ -48,7 +72,9 @@ src/main.ts         binds DOM events → controller; subscribes → paint
 
 Future adapters (React, Solid, web components, canvas) would reuse `core` + `controller` unchanged; only the view layer swaps.
 
-link:#readme-top[back to top]
+++++
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+++++
 
 == Installation
 
@@ -73,7 +99,9 @@ Sharing a full header package across the Astro site and Vite demos is optional; 
 
 This demo implements the breadcrumb in `src/ui/render.ts` (`eyebrow-link` · `eyebrow-label`).
 
-link:#readme-top[back to top]
+++++
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+++++
 
 == Changelog
 
@@ -86,4 +114,6 @@ HCI Nerdz — [ORG_EMAIL]
 * Project: https://github.com/HCI-Nerdz/pipeline-composer
 * Site: https://hci-nerdz.github.io
 
-link:#readme-top[back to top]
+++++
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+++++
