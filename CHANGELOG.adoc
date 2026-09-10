@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-09-10 — Crawlability + no-JS fallback
+
+* link:changelog-details/2026-09-10%20-%20crawlability-no-js.adoc[Details]
+
+
 
 
 == 2026-08-02 — Compose coaching tip
