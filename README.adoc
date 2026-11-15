@@ -1,5 +1,6 @@
 ifndef::env-github[:icons: font]
-:toc: preamble
+:toc: macro
+:toc-title:
 :toclevels: 2
 :sectanchors:
 
@@ -41,6 +42,15 @@ link:https://hci-nerdz.github.io/docs/hci-nerdz/processing-maps.html[Explore the
 · 
 link:https://github.com/HCI-Nerdz/pipeline-composer/issues[Report Bug]
 endif::[]
+
+++++
+<details>
+<summary>Table of Contents</summary>
+++++
+toc::[]
+++++
+</details>
+++++
 
 Part of link:https://github.com/HCI-Nerdz[HCI Nerdz].
 
